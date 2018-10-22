@@ -30,7 +30,7 @@ public class Tracer {
 	
 	private static final String   PROJECT_NAME   = "default";
 	private static final String[] EXTENSIONS     = new String[] { "p", "py", "w", "cls" };
-	private static final int[]    NON_EXECUTABLE = new int[] { NodeTypes.USING, NodeTypes.DEFINE, NodeTypes.DO, NodeTypes.PROCEDURE, NodeTypes.PERIOD, NodeTypes.REPEAT, NodeTypes.METHOD, NodeTypes.FUNCTION, NodeTypes.CLASS, NodeTypes.CONSTRUCTOR };
+	private static final int[]    NON_EXECUTABLE = new int[] { NodeTypes.USING, NodeTypes.DEFINE, NodeTypes.DO, NodeTypes.PROCEDURE, NodeTypes.PERIOD, NodeTypes.REPEAT, NodeTypes.METHOD, NodeTypes.FUNCTION, NodeTypes.CLASS, NodeTypes.CONSTRUCTOR, NodeTypes.CATCH, NodeTypes.FINALLY, NodeTypes.INTERFACE, NodeTypes.IMPLEMENTS, NodeTypes.INHERITS, NodeTypes.ABSTRACT, NodeTypes.FINAL };
 	
 	private int errors  = 0;
 	private int success = 0;
@@ -176,7 +176,8 @@ public class Tracer {
 			for (String source : sources.keySet()) {
 				Map<Integer,List<JPNode>> map = sources.get(source);
 				String path = source.replaceAll(basedir.getCanonicalPath().replaceAll("\\\\","\\\\\\\\"),"").substring(1);
-				
+				path = path.replace("\\", "/");
+
 				writer.write("  <file path=\"" + path + "\">\n");
 				
 				for (Integer line : map.keySet()) {
